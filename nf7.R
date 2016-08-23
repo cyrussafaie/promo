@@ -48,7 +48,7 @@ plot.ts(qty.per.cnt.data[,1:10], main="Top 10 items in NF7 - qty per cust (pre6 
 
 ###################################################################
 ###################################################################
-#Function for extracting baseline
+#Function for extracting baseline for customer
 ###################################################################
 ###################################################################
 
@@ -79,9 +79,14 @@ baseline_qty=function(dat)
                                 ,promo_lift_BP=round(10000*(dat[7,]/baseline_amount-1),0)
                                 ,post1_lift=round(dat[8,]-baseline_amount,0), post2_lift=round(dat[9,]-baseline_amount,0),
                                 post3_lift=round(dat[10,]-baseline_amount,0)
-                                ,lift_PromoPlusPost=round(dat[7,]+dat[8,]+dat[9,]+dat[10,]-4*baseline_amount,0) )
+                                ,lift_PromoPlusPost=round(dat[7,]+dat[8,]+dat[9,]+dat[10,]-4*baseline_amount,0)
+                                ,lift_PromoPlusPost_BP=round(10000*(dat[7,]+dat[8,]+dat[9,]+dat[10,]-4*baseline_amount)/baseline_amount) )
         
         promo.vs.baseline=as.matrix(promo.vs.baseline)
+        
+        CherryPicker=ifelse(as.vector(rowMeans(yep[,6:8]))<0,1,0)
+        promo.vs.baseline=cbind(promo.vs.baseline,CherryPicker)
+        
         return(promo.vs.baseline)
         suppressWarnings()
 }
@@ -89,17 +94,12 @@ baseline_qty=function(dat)
 suppressWarnings(baseline_qty(qty.data))
 
 
+###################################################################
+###################################################################
+#Function for extracting baseline for customer
+###################################################################
+###################################################################
 
-
-
-
-
-
-
-
-
-promo.vs.baseline$type=ifelse(rowMeans(promo.vs.baseline[,6:8])<0,"CherryPickers","OTH")
-as.matrix(baseline_qty(qty.data))
 
 
 dim(baseline_qty(qty.data))
@@ -108,7 +108,7 @@ dim(baseline_qty(qty.data))
 
 suppressWarnings(baseline_qty(cnt.data))
 
-59905/49167
+c59905/49167
 #library(plyr)
 #colwise(fun)(d)
 #?plot.ts
