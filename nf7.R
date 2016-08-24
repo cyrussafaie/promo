@@ -1,4 +1,9 @@
 
+version
+Sys.info()
+sessionInfo() 
+
+dir()
 # export from NEtezza DB, SQL script-nf
 nf7=read.csv("cust_details_pre.csv")
 str(nf7)
