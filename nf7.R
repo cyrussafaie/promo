@@ -2,10 +2,19 @@
 version
 Sys.info()
 sessionInfo() 
-
 dir()
+
+##############################
+##############################
+#data reading 
+##############################
+##############################
+
+
+
+
 # export from NEtezza DB, SQL script-nf
-nf7=read.csv("cust_details_pre.csv")
+nf7=read.csv("regular_customers.csv")
 str(nf7)
 names(nf7)
 dim(nf7)
@@ -30,7 +39,8 @@ length(qty.cnt.index)
 
 
 nf.7.var.t=t(nf.7.var[,-c(1,2)])
-colnames(nf.7.var.t)=strtrim(nf.7.var[,2],15)
+colnames(nf.7.var.t)=nf.7.var[,2]
+#colnames(nf.7.var.t)=strtrim(nf.7.var[,2],15)
 var.names=rownames(nf.7.var.t)
 
 ###################################################################
@@ -89,15 +99,12 @@ baseline_qty=function(dat)
         
         promo.vs.baseline=as.matrix(promo.vs.baseline)
         
-        CherryPicker=ifelse(as.vector(rowMeans(yep[,6:8]))<0,1,0)
-        promo.vs.baseline=cbind(promo.vs.baseline,CherryPicker)
-        
         return(promo.vs.baseline)
         suppressWarnings()
 }
 
 suppressWarnings(baseline_qty(qty.data))
-
+write.csv(suppressWarnings(baseline_qty(qty.data)),"baseline.csv")
 
 ###################################################################
 ###################################################################
