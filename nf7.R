@@ -1,3 +1,4 @@
+#Cyrus Safaie#Promo effectiveness
 
 version
 Sys.info()
@@ -120,7 +121,6 @@ dim(baseline_qty(qty.data))
 
 suppressWarnings(baseline_qty(cnt.data))
 
-c59905/49167
 #library(plyr)
 #colwise(fun)(d)
 #?plot.ts
