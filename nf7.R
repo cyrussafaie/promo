@@ -105,7 +105,7 @@ baseline_qty=function(dat)
 
 suppressWarnings(baseline_qty(qty.data))
 write.csv(suppressWarnings(baseline_qty(qty.data)),"baseline.csv")
-
+saveRDS(qty.data, "qty.data.rds")
 ###################################################################
 ###################################################################
 #Function for extracting baseline for customer
