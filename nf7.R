@@ -14,35 +14,39 @@ dir()
 
 
 
-# export from NEtezza DB, SQL script-nf
+# export from NEtezza DB, SQL script-nf20160824
+
+# total item level info for regular customers (those who purchase pre and post and during promo)
 nf7=read.csv("regular_customers.csv")
 str(nf7)
 names(nf7)
 dim(nf7)
 
 #col index
-relevent.index=c(2,6,29:58)
+relevent.index=c(2,6,29:62)
 nf.7.var=nf7[,relevent.index]
 names(nf.7.var)
 dim(nf.7.var)
 
 # qty index
-qty.index=1:10
+qty.index=1:12
 length(qty.index)
 
 # count index
-cnt.index=11:20
+cnt.index=13:24
 length(cnt.index)
 
+# 
 #qty per count
-qty.cnt.index=21:30
-length(qty.cnt.index)
+#qty.cnt.index=24:30
+#length(qty.cnt.index)
 
 
 nf.7.var.t=t(nf.7.var[,-c(1,2)])
 colnames(nf.7.var.t)=nf.7.var[,2]
 #colnames(nf.7.var.t)=strtrim(nf.7.var[,2],15)
 var.names=rownames(nf.7.var.t)
+nf.7.var.t
 
 ###################################################################
 ###################################################################
