@@ -56,12 +56,12 @@ nf.7.var.t
 
 qty.data=nf.7.var.t[qty.index,]
 cnt.data=nf.7.var.t[cnt.index,]
-qty.per.cnt.data=nf.7.var.t[qty.cnt.index,]
+#qty.per.cnt.data=nf.7.var.t[qty.cnt.index,]
 
 
-# basix trend view
-plot.ts(cbind(qty.data[,1:5],cnt.data[,1:5]), main="Top 1-5 items in NF7 - qty on left and customer count on right (pre6 to post3)",cex.lab=0.4)
-plot.ts(cbind(qty.data[,6:10],cnt.data[,6:10]), main="Top 5-10 items in NF7 - qty on left and customer count on right (pre6 to post3)",cex.lab=0.4)
+# basic trend view fro volume and customr change 
+plot.ts(cbind(qty.data[,1:5],cnt.data[,1:5]), main="Top 1-5 items in NF7 - qty on left and customer count on right (pre6 to post3)",cex.lab=0.4,type='b')
+plot.ts(cbind(qty.data[,6:10],cnt.data[,6:10]), main="Top 5-10 items in NF7 - qty on left and customer count on right (pre6 to post3)",cex.lab=0.4,type='b')
 
 # top 10 qty per cust
 plot.ts(qty.per.cnt.data[,1:10], main="Top 10 items in NF7 - qty per cust (pre6 to post3)",cex.lab=0.4)
@@ -93,14 +93,21 @@ baseline_qty=function(dat)
                 
         }
         
-        baseline_amount=rowMeans(cbind(trimean,ma2.result,pre1=dat[6,]))
-        promo.vs.baseline=cbind(baseline=round(baseline_amount,0),pre1=round(dat[6,],0)
-                                ,promo=round(dat[7,],0), promo_lift=round(dat[7,]-baseline_amount,0)
+        baseline_amount=rowMeans(cbind(trimean,ma2.result,pre1=dat[6,],pre2=dat[5,]))
+        promo.vs.baseline=cbind(baseline=round(baseline_amount,0)
+                                
+                                ,pre1=round(dat[6,],0)
+                                ,promo=round(dat[7,],0)
+                                , promo_lift=round(dat[7,]-baseline_amount,0)
                                 ,promo_lift_BP=round(10000*(dat[7,]/baseline_amount-1),0)
-                                ,post1_lift=round(dat[8,]-baseline_amount,0), post2_lift=round(dat[9,]-baseline_amount,0),
-                                post3_lift=round(dat[10,]-baseline_amount,0)
-                                ,lift_PromoPlusPost=round(dat[7,]+dat[8,]+dat[9,]+dat[10,]-4*baseline_amount,0)
-                                ,lift_PromoPlusPost_BP=round(10000*(dat[7,]+dat[8,]+dat[9,]+dat[10,]-4*baseline_amount)/baseline_amount) )
+                                ,post1_lift=round(dat[8,]-baseline_amount,0) 
+                                ,post2_lift=round(dat[9,]-baseline_amount,0)
+                                ,post3_lift=round(dat[10,]-baseline_amount,0)
+                                ,post4_lift=round(dat[11,]-baseline_amount,0)
+                                ,post5_lift=round(dat[12,]-baseline_amount,0)
+                                
+                                ,lift_PromoPlusPost5=round(dat[7,]+dat[8,]+dat[9,]+dat[10,]+dat[11,]+dat[12,]-6*baseline_amount,0)
+                                ,lift_PromoPlusPost5_BP=round(10000*(dat[7,]+dat[8,]+dat[9,]+dat[10,]+dat[11,]+dat[12,]-6*baseline_amount)/baseline_amount) )
         
         promo.vs.baseline=as.matrix(promo.vs.baseline)
         
@@ -109,8 +116,8 @@ baseline_qty=function(dat)
 }
 
 suppressWarnings(baseline_qty(qty.data))
-write.csv(suppressWarnings(baseline_qty(qty.data)),"baseline.csv")
-saveRDS(qty.data, "qty.data.rds")
+write.csv(suppressWarnings(baseline_qty(qty.data)),"RegCust_baseline_cases_20160928.csv")
+saveRDS(qty.data, "RegCust_baseline_cases_20160928.rds")
 ###################################################################
 ###################################################################
 #Function for extracting baseline for customer
@@ -118,12 +125,11 @@ saveRDS(qty.data, "qty.data.rds")
 ###################################################################
 
 
-
-dim(baseline_qty(qty.data))
-
+#dim(baseline_qty(qty.data))
 
 
-suppressWarnings(baseline_qty(cnt.data))
+
+#suppressWarnings(baseline_qty(cnt.data))
 
 #library(plyr)
 #colwise(fun)(d)
